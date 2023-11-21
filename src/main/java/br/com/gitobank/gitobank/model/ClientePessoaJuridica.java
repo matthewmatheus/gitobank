@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ClientePessoaJuridica extends PessoaCliente{
 
-    private int idCliente;
+    private Long idCliente;
     private String razaoSocial;
     private String cpnj;
     private String inscricaoEstadual;

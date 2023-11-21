@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ClientePessoaFisica extends PessoaCliente {
 
+    private Long idCliente;
     private String rg;
     private String cpf;
     private LocalDate dtNascimento;

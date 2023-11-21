@@ -1,11 +1,10 @@
 package br.com.gitobank.gitobank.model;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class Transacao {
 
-    private UUID idTransacao;
+    private Long idTransacao;
     private int nrConta;
     private int idMeioPagamento;
     private Date dtTransacao;
@@ -18,7 +17,7 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    public Transacao(UUID idTransacao) {
+    public Transacao(Long idTransacao) {
         this.idTransacao = idTransacao;
     }
 

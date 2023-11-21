@@ -1,19 +1,17 @@
 package br.com.gitobank.gitobank.model;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 public class ContaBancaria {
 
-    private UUID idCliente;
+    private Long idCliente;
     private String nrConta;
     private String tipoConta;
     private double saldo;
     private LocalDate dtAbertura;
 
 
-    public ContaBancaria(UUID idCliente, String nrConta, String tipoConta, double saldo, LocalDate dtAbertura) {
+    public ContaBancaria(Long idCliente, String nrConta, String tipoConta, double saldo, LocalDate dtAbertura) {
         this.idCliente = idCliente;
         this.nrConta = nrConta;
         this.tipoConta = tipoConta;

@@ -2,11 +2,10 @@ package br.com.gitobank.gitobank.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class PessoaCliente {
 
-    private UUID idCliente;
+    private Long idCliente;
 
     private String nome;
     private String sobrenome;
@@ -15,7 +14,7 @@ public class PessoaCliente {
     private List<Telefone> telefone;
     private List<CartaoCredito> cartoesCredito;
 
-    public PessoaCliente() {
+    public PessoaCliente(Long idCLiente, String nome, String sobrenome, String email) {
     }
 
     public PessoaCliente(String nome, String sobrenome, String email, List<Telefone> telefone) {
@@ -24,6 +23,7 @@ public class PessoaCliente {
         this.email = email;
         this.telefone = telefone;
     }
+
 
     public PessoaCliente(String nome, String sobrenome, String email) {
         this.nome = nome;
@@ -63,8 +63,9 @@ public class PessoaCliente {
         return telefone;
     }
 
-    public void setIdCliente(UUID idCliente) {
+    public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+
     }
 }
 

@@ -1,11 +1,10 @@
 package br.com.gitobank.gitobank.model;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class CartaoCredito {
 
-    private UUID idCliente;
+    private Long idCliente;
     private int idCartao;
     private double vlLimite;
     private Date dtVencimento;
@@ -13,7 +12,7 @@ public class CartaoCredito {
     private int numeroCartao;
 
 
-    public CartaoCredito(UUID idCliente, double vlLimite, Date dtVencimento, String instituicaoFinanceira, int numeroCartao) {
+    public CartaoCredito(Long idCliente, double vlLimite, Date dtVencimento, String instituicaoFinanceira, int numeroCartao) {
         this.idCliente = idCliente;
         this.vlLimite = vlLimite;
         this.dtVencimento = dtVencimento;

@@ -1,23 +1,21 @@
 package br.com.gitobank.gitobank.model;
 
-import java.util.UUID;
-
 public class MeioPagamento {
-    private UUID idMeioPagamento;
+    private Long idMeioPagamento;
     private String descricao;
 
     // Construtor
-    public MeioPagamento(UUID idMeioPagamento, String descricao) {
+    public MeioPagamento(Long idMeioPagamento, String descricao) {
         this.idMeioPagamento = idMeioPagamento;
         this.descricao = descricao;
     }
 
     // Getters e Setters
-    public UUID getIdMeioPagamento() {
+    public Long getIdMeioPagamento() {
         return idMeioPagamento;
     }
 
-    public void setIdMeioPagamento(UUID idMeioPagamento) {
+    public void setIdMeioPagamento(Long idMeioPagamento) {
         this.idMeioPagamento = idMeioPagamento;
     }
 

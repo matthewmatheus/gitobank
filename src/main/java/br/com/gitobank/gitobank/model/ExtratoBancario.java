@@ -2,11 +2,10 @@ package br.com.gitobank.gitobank.model;
 
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class ExtratoBancario {
 
-    private UUID idExtrato;
+    private Long idExtrato;
     private String nrConta;
     private double valorGasto;
     private LocalDate dtGasto;
@@ -29,7 +28,7 @@ public class ExtratoBancario {
 
 
 
-    public UUID getIdExtrato() {
+    public Long getIdExtrato() {
         return idExtrato;
     }
 
