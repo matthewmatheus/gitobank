@@ -2,6 +2,7 @@ package br.com.gitobank.control.servlets;
 
 import br.com.gitobank.dao.PessoaFisicaDAO;
 import br.com.gitobank.exception.DBException;
+import br.com.gitobank.factory.DAOFactory;
 import br.com.gitobank.model.ClientePessoaFisica;
 import br.com.gitobank.model.PessoaCliente;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,15 +24,19 @@ public class PessoaFisicaServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        dao = DAOFactory.getPessoaFisicaDAO();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
-            String nome = request.getParameter("nome");
-            String sobrenome = request.getParameter("sobrenome");
-            String email = request.getParameter("email");
+            HttpSession session = request.getSession();
+            String nome = (String) session.getAttribute("nome");
+            String sobrenome = (String) session.getAttribute("sobrenome");
+            String email = (String) session.getAttribute("email");
+
+            System.out.println("OIA O NOME AI: " + nome);
 
             // Obtendo os parâmetros do formulário
             String rg = request.getParameter("rg");
@@ -43,6 +49,7 @@ public class PessoaFisicaServlet extends HttpServlet {
             ClientePessoaFisica pessoaFisica = new ClientePessoaFisica(nome, sobrenome, email, rg, cpf, dtNascimento, sexo, idade);
 
             // Cadastrando a Pessoa Física
+            System.out.println(pessoaFisica.getNome());
             dao.cadastrarPessoaFisica(pessoaFisica);
 
 

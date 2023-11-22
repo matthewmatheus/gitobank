@@ -29,7 +29,6 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
             stmtCliente.setString(1, pessoaFisica.getNome());
             stmtCliente.setString(2, pessoaFisica.getSobrenome());
             stmtCliente.setString(3, pessoaFisica.getEmail());
-
             int linhasAfetadas = stmtCliente.executeUpdate();
 
             if (linhasAfetadas > 0) {
