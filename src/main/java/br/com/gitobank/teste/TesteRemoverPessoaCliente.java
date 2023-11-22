@@ -14,7 +14,7 @@ public class TesteRemoverPessoaCliente {
         //cadastrar pessoa
 
         try {
-            dao.removerPessoaCliente(49L);
+            dao.removerPessoaCliente(74L);
             System.out.println("Pessoa excluida!");
         } catch (DBException e) {
             e.printStackTrace();

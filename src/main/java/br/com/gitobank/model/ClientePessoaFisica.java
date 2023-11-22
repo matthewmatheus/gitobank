@@ -34,7 +34,16 @@ public class ClientePessoaFisica extends PessoaCliente {
         this.dtNascimento = dtNascimento;
         this.sexo = sexo;
         this.idade = idade;
-        this.idCliente = getIdCliente();
+    }
+
+    public ClientePessoaFisica(Long idCliente,String nome, String sobrenome, String email, String rg, String cpf, LocalDate dtNascimento, String sexo, int idade) {
+        super(nome, sobrenome, email);
+        this.rg = rg;
+        this.cpf = cpf;
+        this.dtNascimento = dtNascimento;
+        this.sexo = sexo;
+        this.idade = idade;
+        this.idCliente = idCliente;
     }
 
 
@@ -69,6 +78,11 @@ public class ClientePessoaFisica extends PessoaCliente {
 
     public Long getIdCliente() {
         return idCliente;
+    }
+
+    @Override
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 }
 

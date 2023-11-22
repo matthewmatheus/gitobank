@@ -65,7 +65,6 @@ public class PessoaCliente {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
-
     }
 
     public Long getIdCliente() {

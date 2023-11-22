@@ -15,18 +15,15 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
     private Connection conexao;
 
     @Override
-    public void cadastrarPessoaFisica(ClientePessoaFisica pessoaFisica) throws DBException {
+    public ClientePessoaFisica cadastrarPessoaFisica(ClientePessoaFisica pessoaFisica) throws DBException {
         PreparedStatement stmtCliente = null;
         PreparedStatement stmtPessoaFisica = null;
         ResultSet rsKeys = null;
 
         try {
             conexao = ConnectionManager.getInstance().getConnection();
-
-            // Iniciar transação
             conexao.setAutoCommit(false);
 
-            // Passo 1: Inserir na tabela TB_PESSOA_CLIENTE
             String sqlInsertCliente = "INSERT INTO TB_PESSOA_CLIENTE (IDCLIENTE, NOME, SOBRENOME, EMAIL) VALUES (SEQ_CLIENTE_ID.NEXTVAL,?, ?, ?)";
             stmtCliente = conexao.prepareStatement(sqlInsertCliente, new String[]{"IDCLIENTE"});
             stmtCliente.setString(1, pessoaFisica.getNome());
@@ -36,12 +33,11 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
             int linhasAfetadas = stmtCliente.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                // Recuperar o idCliente gerado
                 rsKeys = stmtCliente.getGeneratedKeys();
+                long idCliente = 0;
                 if (rsKeys.next()) {
-                    long idCliente = rsKeys.getLong(1);
+                    idCliente = rsKeys.getLong(1);
 
-                    // Passo 2: Inserir na tabela TB_CLIENTE_PF
                     String sqlInsertPF = "INSERT INTO TB_CLIENTE_PF (IDCLIENTE, RG, CPF, DTNASCIMENTO, SEXO, IDADE) VALUES (?, ?, ?, ?, ?, ?)";
                     stmtPessoaFisica = conexao.prepareStatement(sqlInsertPF);
                     stmtPessoaFisica.setLong(1, idCliente);
@@ -54,14 +50,12 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
                     stmtPessoaFisica.executeUpdate();
 
                     pessoaFisica.setIdCliente(idCliente);
-                    // Confirmar transação
                     conexao.commit();
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
 
-            // Reverter transação em caso de exceção
             try {
                 if (conexao != null) {
                     conexao.rollback();
@@ -89,8 +83,9 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
                 e.printStackTrace();
             }
         }
-    }
 
+        return pessoaFisica;
+    }
     @Override
     public ClientePessoaFisica obterPessoaFisica(Long idCliente) throws DBException {
         ClientePessoaFisica pessoaFisica = null;
@@ -110,7 +105,7 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
                 String sexo = rs.getString("SEXO");
                 int idade = rs.getInt("IDADE");
 
-                pessoaFisica = new ClientePessoaFisica(null, null, null, null, rg, cpf,
+                pessoaFisica = new ClientePessoaFisica( null, null, null, rg, cpf,
                         dtNascimento.toLocalDate(), sexo, idade);
                 pessoaFisica.setIdCliente(idCliente);
             }

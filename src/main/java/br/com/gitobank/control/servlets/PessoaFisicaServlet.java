@@ -45,6 +45,7 @@ public class PessoaFisicaServlet extends HttpServlet {
             // Cadastrando a Pessoa Física
             dao.cadastrarPessoaFisica(pessoaFisica);
 
+
             // Configurando mensagens de sucesso
             request.setAttribute("msg", "Pessoa Física cadastrada com sucesso!");
             System.out.println("sucesso");
