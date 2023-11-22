@@ -3,7 +3,6 @@ package br.com.gitobank.dao.implement;
 import br.com.gitobank.dao.PessoaFisicaDAO;
 import br.com.gitobank.exception.DBException;
 import br.com.gitobank.model.ClientePessoaFisica;
-import br.com.gitobank.model.PessoaCliente;
 import br.com.gitobank.singleton.ConnectionManager;
 
 import java.sql.Connection;
@@ -15,44 +14,85 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
 
     private Connection conexao;
 
-
     @Override
     public void cadastrarPessoaFisica(ClientePessoaFisica pessoaFisica) throws DBException {
-
-        PreparedStatement stmt = null;
+        PreparedStatement stmtCliente = null;
+        PreparedStatement stmtPessoaFisica = null;
+        ResultSet rsKeys = null;
 
         try {
-           conexao = ConnectionManager.getInstance().getConnection();
-            String sql = "INSERT INTO TB_CLIENTE_PF (idCliente, RG, CPF, DTNASCIMENTO, SEXO, IDADE) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            conexao = ConnectionManager.getInstance().getConnection();
 
-            stmt = conexao.prepareStatement(sql);
-            stmt.setLong(1, pessoaFisica.getIdCliente());
-            stmt.setString(2, pessoaFisica.getRg());
-            stmt.setString(3, pessoaFisica.getCpf());
-            stmt.setDate(4, java.sql.Date.valueOf(pessoaFisica.getDtNascimento()));
-            stmt.setString(5, pessoaFisica.getSexo());
-            stmt.setInt(6, pessoaFisica.getIdade());
+            // Iniciar transação
+            conexao.setAutoCommit(false);
 
-            stmt.executeUpdate();
+            // Passo 1: Inserir na tabela TB_PESSOA_CLIENTE
+            String sqlInsertCliente = "INSERT INTO TB_PESSOA_CLIENTE (IDCLIENTE, NOME, SOBRENOME, EMAIL) VALUES (SEQ_CLIENTE_ID.NEXTVAL,?, ?, ?)";
+            stmtCliente = conexao.prepareStatement(sqlInsertCliente, new String[]{"IDCLIENTE"});
+            stmtCliente.setString(1, pessoaFisica.getNome());
+            stmtCliente.setString(2, pessoaFisica.getSobrenome());
+            stmtCliente.setString(3, pessoaFisica.getEmail());
 
+            int linhasAfetadas = stmtCliente.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                // Recuperar o idCliente gerado
+                rsKeys = stmtCliente.getGeneratedKeys();
+                if (rsKeys.next()) {
+                    long idCliente = rsKeys.getLong(1);
+
+                    // Passo 2: Inserir na tabela TB_CLIENTE_PF
+                    String sqlInsertPF = "INSERT INTO TB_CLIENTE_PF (IDCLIENTE, RG, CPF, DTNASCIMENTO, SEXO, IDADE) VALUES (?, ?, ?, ?, ?, ?)";
+                    stmtPessoaFisica = conexao.prepareStatement(sqlInsertPF);
+                    stmtPessoaFisica.setLong(1, idCliente);
+                    stmtPessoaFisica.setString(2, pessoaFisica.getRg());
+                    stmtPessoaFisica.setString(3, pessoaFisica.getCpf());
+                    stmtPessoaFisica.setDate(4, java.sql.Date.valueOf(pessoaFisica.getDtNascimento()));
+                    stmtPessoaFisica.setString(5, pessoaFisica.getSexo());
+                    stmtPessoaFisica.setInt(6, pessoaFisica.getIdade());
+
+                    stmtPessoaFisica.executeUpdate();
+
+                    pessoaFisica.setIdCliente(idCliente);
+                    // Confirmar transação
+                    conexao.commit();
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+
+            // Reverter transação em caso de exceção
+            try {
+                if (conexao != null) {
+                    conexao.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
             throw new DBException("Erro ao cadastrar Pessoa Física.");
         } finally {
             try {
-                stmt.close();
-                conexao.close();
+                if (stmtCliente != null) {
+                    stmtCliente.close();
+                }
+                if (stmtPessoaFisica != null) {
+                    stmtPessoaFisica.close();
+                }
+                if (rsKeys != null) {
+                    rsKeys.close();
+                }
+                if (conexao != null) {
+                    conexao.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        }
-
+    }
 
     @Override
     public ClientePessoaFisica obterPessoaFisica(Long idCliente) throws DBException {
-
         ClientePessoaFisica pessoaFisica = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -74,13 +114,16 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
                         dtNascimento.toLocalDate(), sexo, idade);
                 pessoaFisica.setIdCliente(idCliente);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
-                conexao.close();
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conexao != null) {
+                    conexao.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -88,9 +131,8 @@ public class OraclePessoaFisicaDAO implements PessoaFisicaDAO {
         return pessoaFisica;
     }
 
-
     @Override
     public void removerPessoaFisica(Long idCliente) throws DBException {
-
+        // Implemente a remoção aqui, se necessário
     }
 }

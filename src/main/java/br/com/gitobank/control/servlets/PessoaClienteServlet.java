@@ -34,7 +34,9 @@ public class PessoaClienteServlet extends HttpServlet {
             String email = request.getParameter("email");
             String tipoPessoa = request.getParameter("tipoPessoa");
 
-            PessoaCliente pessoa = new PessoaCliente(nome,sobrenome, email);
+//            PessoaCliente pessoa = new PessoaCliente(nome,sobrenome, email);
+
+//            request.setAttribute("pessoa", pessoa);
 
             if ("fisica".equals(tipoPessoa)) {
                 // Adicione os parâmetros na URL para serem acessados no novo servlet
@@ -57,5 +59,8 @@ public class PessoaClienteServlet extends HttpServlet {
 //        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+    }
 }

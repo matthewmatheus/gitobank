@@ -21,7 +21,7 @@ public class OraclePessoaJuridicaDAO implements PessoaJuridicaDAO {
         try {
             conexao = ConnectionManager.getInstance().getConnection();
 
-            String sql = "INSERT INTO TB_PESSOA_JURIDICA (IDCLIENTE, NOME, SOBRENOME, EMAIL, RAZAO_SOCIAL, CNPJ, INSCRICAO_ESTADUAL, INSCRICAO_MUNICIPAL, DATA_ABERTURA) " +
+            String sql = "INSERT INTO TB_CLIENTE_PJ (IDCLIENTE, NOME, SOBRENOME, EMAIL, RAZAO_SOCIAL, CNPJ, INSCRICAO_ESTADUAL, INSCRICAO_MUNICIPAL, DATA_ABERTURA) " +
                     "VALUES (SEQ_CLIENTE_ID.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = conexao.prepareStatement(sql);

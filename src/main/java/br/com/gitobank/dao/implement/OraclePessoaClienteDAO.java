@@ -21,7 +21,7 @@ public class OraclePessoaClienteDAO implements PessoaClienteDAO {
         try {
             conexao = ConnectionManager.getInstance().getConnection();
 
-            String sql = "INSERT INTO TB_PESSOA_CLIENTE (idCliente, NOME, SOBRENOME, EMAIL) VALUES (SEQ_CLIENTE_ID.NEXTVAL, ?, ?, ?)";
+            String sql = "INSERT INTO TB_PESSOA_CLIENTE (IDCLIENTE, NOME, SOBRENOME, EMAIL) VALUES (SEQ_CLIENTE_ID.NEXTVAL, ?, ?, ?)";
 
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, pessoaCliente.getNome());
@@ -82,11 +82,13 @@ public class OraclePessoaClienteDAO implements PessoaClienteDAO {
         PreparedStatement stmt = null;
 
         try {
-            conexao =  ConnectionManager.getInstance().getConnection();
-            String sql = "DELETE FROM TB_PESSOA_CLIENTE WHERE IDCLIENTE = ? CASCADE CONSTRAINTS";
+
+            conexao = ConnectionManager.getInstance().getConnection();
+            String sql = "DELETE FROM TB_PESSOA_CLIENTE WHERE IDCLIENTE = ?";
             stmt = conexao.prepareStatement(sql);
             stmt.setObject(1, idCliente);
             stmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new DBException("Erro ao remover");
         } finally {
@@ -97,5 +99,4 @@ public class OraclePessoaClienteDAO implements PessoaClienteDAO {
                 e.printStackTrace();
             }
         }
-    }
-}
+    }}

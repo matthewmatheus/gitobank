@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ClientePessoaFisica extends PessoaCliente {
 
+
     private Long idCliente;
     private String rg;
     private String cpf;
@@ -33,6 +34,7 @@ public class ClientePessoaFisica extends PessoaCliente {
         this.dtNascimento = dtNascimento;
         this.sexo = sexo;
         this.idade = idade;
+        this.idCliente = getIdCliente();
     }
 
 

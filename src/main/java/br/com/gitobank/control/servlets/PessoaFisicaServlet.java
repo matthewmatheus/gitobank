@@ -28,8 +28,6 @@ public class PessoaFisicaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
-            PessoaCliente pessoaCliente = (PessoaCliente) request.getAttribute("pessoa");
-
             String nome = request.getParameter("nome");
             String sobrenome = request.getParameter("sobrenome");
             String email = request.getParameter("email");
@@ -49,14 +47,17 @@ public class PessoaFisicaServlet extends HttpServlet {
 
             // Configurando mensagens de sucesso
             request.setAttribute("msg", "Pessoa Física cadastrada com sucesso!");
+            System.out.println("sucesso");
         } catch (DBException db) {
             db.printStackTrace();
             // Configurando mensagens de erro
             request.setAttribute("erro", "Erro ao cadastrar Pessoa Física");
+            System.out.println("erro cadastro");
         } catch (Exception e) {
             e.printStackTrace();
             // Configurando mensagens de erro
             request.setAttribute("erro", "Por favor, valide os dados");
+            System.out.println("erro dados");
         }
 
         // Redirecionando de volta para a página inicial ou outra página apropriada
