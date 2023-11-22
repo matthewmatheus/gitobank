@@ -3,7 +3,7 @@ package br.com.gitobank.teste;
 import br.com.gitobank.dao.PessoaClienteDAO;
 import br.com.gitobank.exception.DBException;
 import br.com.gitobank.factory.DAOFactory;
-import br.com.gitobank.gitobank.model.PessoaCliente;
+import br.com.gitobank.model.PessoaCliente;
 
 public class TestePessoaClienteDAO {
 

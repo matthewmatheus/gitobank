@@ -1,9 +1,7 @@
 package br.com.gitobank.dao;
 
 import br.com.gitobank.exception.DBException;
-import br.com.gitobank.gitobank.model.PessoaCliente;
-
-import java.util.UUID;
+import br.com.gitobank.model.PessoaCliente;
 
 public interface PessoaClienteDAO {
     void cadastrarPessoaCliente(PessoaCliente pessoaCliente) throws DBException;

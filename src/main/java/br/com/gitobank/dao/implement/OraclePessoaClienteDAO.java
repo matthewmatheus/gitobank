@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
-import br.com.gitobank.gitobank.model.PessoaCliente;
+import br.com.gitobank.model.PessoaCliente;
 import br.com.gitobank.dao.PessoaClienteDAO;
 import br.com.gitobank.exception.DBException;
 import br.com.gitobank.singleton.ConnectionManager;
@@ -86,7 +83,7 @@ public class OraclePessoaClienteDAO implements PessoaClienteDAO {
 
         try {
             conexao =  ConnectionManager.getInstance().getConnection();
-            String sql = "DELETE FROM TB_PESSOA_CLIENTE WHERE IDCLIENTE = ?";
+            String sql = "DELETE FROM TB_PESSOA_CLIENTE WHERE IDCLIENTE = ? CASCADE CONSTRAINTS";
             stmt = conexao.prepareStatement(sql);
             stmt.setObject(1, idCliente);
             stmt.executeUpdate();
