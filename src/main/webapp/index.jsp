@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@ include file="menu.jsp" %>
+
 <div class="container">
     <h1>Se cadastre e torne-se um Gito agora mesmo!</h1>
     <c:if test="${not empty msg}">
