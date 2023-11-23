@@ -32,9 +32,17 @@ public class ClientePessoaJuridica extends PessoaCliente{
         this.dataAbertura = dataAbertura;
     }
 
-    public void cadastrarPessoaJuridica() {
-
+    public ClientePessoaJuridica(Long idCliente, String nome, String sobrenome, String email, String razaoSocial, String cpnj, String inscricaoEstadual, String inscricaoMunicipal, LocalDate dataAbertura) {
+        super(nome, sobrenome, email);
+        this.razaoSocial = razaoSocial;
+        this.cpnj = cpnj;
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.inscricaoMunicipal = inscricaoMunicipal;
+        this.dataAbertura = dataAbertura;
+        this.idCliente = idCliente;
     }
+
+
 
     public Long getIdCliente() {
         return idCliente;

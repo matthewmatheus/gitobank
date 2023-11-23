@@ -47,14 +47,6 @@ public class ClientePessoaFisica extends PessoaCliente {
     }
 
 
-    public void cadastrarPessoaFisica(String rg, String cpf, Date dtNascimento, String sexo, String email) {
-
-    }
-
-    public ClientePessoaFisica consultarPessoaFisica(String cpf) {
-        return null;
-
-    }
 
     public String getRg() {
         return rg;

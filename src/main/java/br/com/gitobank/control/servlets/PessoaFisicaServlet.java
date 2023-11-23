@@ -36,7 +36,6 @@ public class PessoaFisicaServlet extends HttpServlet {
             String sobrenome = (String) session.getAttribute("sobrenome");
             String email = (String) session.getAttribute("email");
 
-            System.out.println("OIA O NOME AI: " + nome);
 
             // Obtendo os parâmetros do formulário
             String rg = request.getParameter("rg");
@@ -49,7 +48,6 @@ public class PessoaFisicaServlet extends HttpServlet {
             ClientePessoaFisica pessoaFisica = new ClientePessoaFisica(nome, sobrenome, email, rg, cpf, dtNascimento, sexo, idade);
 
             // Cadastrando a Pessoa Física
-            System.out.println(pessoaFisica.getNome());
             dao.cadastrarPessoaFisica(pessoaFisica);
 
 
@@ -68,7 +66,7 @@ public class PessoaFisicaServlet extends HttpServlet {
             System.out.println("erro dados");
         }
 
-        // Redirecionando de volta para a página inicial ou outra página apropriada
+        // Redirecionando de volta para a página home
         response.sendRedirect("home.jsp");
 
     }

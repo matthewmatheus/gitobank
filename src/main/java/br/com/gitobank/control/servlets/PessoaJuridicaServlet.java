@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,17 +28,18 @@ public class PessoaJuridicaServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        dao = DAOFactory.getPessoaJuridicaDAO();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
-            PessoaCliente pessoaCliente = (PessoaCliente) request.getAttribute("pessoa");
+            HttpSession session = request.getSession();
+            String nome = (String) session.getAttribute("nome");
+            String sobrenome = (String) session.getAttribute("sobrenome");
+            String email = (String) session.getAttribute("email");
 
-            String nome = request.getParameter("nome");
-            String sobrenome = request.getParameter("sobrenome");
-            String email = request.getParameter("email");
 
             // Obtendo os parâmetros do formulário
             String razaoSocial = request.getParameter("razaoSocial");
@@ -49,7 +51,7 @@ public class PessoaJuridicaServlet extends HttpServlet {
             // Criando um objeto ClientePessoaFisica
             ClientePessoaJuridica pessoaJuridica = new ClientePessoaJuridica(nome, sobrenome, email, razaoSocial, cnpj, inscricaoEstadual, inscricaoMunicipal, dataAbertura);
 
-            // Cadastrando a Pessoa Física
+            // Cadastrando a Pessoa Jurídica
             dao.cadastrarPessoaJuridica(pessoaJuridica);
 
             // Configurando mensagens de sucesso
@@ -64,7 +66,7 @@ public class PessoaJuridicaServlet extends HttpServlet {
             request.setAttribute("erro", "Por favor, valide os dados");
         }
 
-        // Redirecionando de volta para a página inicial ou outra página apropriada
+        // Redirecionando de volta para a página homez
         response.sendRedirect("home.jsp");
 
     }

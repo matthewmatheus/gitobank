@@ -6,7 +6,7 @@ import br.com.gitobank.model.ClientePessoaJuridica;
 
 public interface PessoaJuridicaDAO {
 
-    void cadastrarPessoaJuridica(ClientePessoaJuridica pessoaJuridica) throws DBException;
+    ClientePessoaJuridica cadastrarPessoaJuridica(ClientePessoaJuridica pessoaJuridica) throws DBException;
     ClientePessoaJuridica obterPessoaJuridica(Long idCliente) throws DBException;
     void removerPessoaJuridica(Long idCliente) throws DBException;
 }
